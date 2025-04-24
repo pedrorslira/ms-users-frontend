@@ -1,4 +1,3 @@
-html,
-body {
+html, body, #root {
     background-image: linear-gradient(to right, #0052b0 ,#b340b3); 
-}
+  }
