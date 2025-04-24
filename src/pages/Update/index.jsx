@@ -6,7 +6,7 @@ export default function UpdateUser() {
   return (
     <div className="create-user-container">
       <div className="create-user-form-wrapper">
-        <UserUpdateForm/>
+        <UserUpdateForm />
       </div>
     </div>
   );
