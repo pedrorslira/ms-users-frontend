@@ -1,16 +1,17 @@
-import { createUser } from "../../api/user";
+import { updateUser } from "../../api/user";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from 'react-toastify';
 
-export const UserForm = ({
-    initialData = { name: "", email: "", phone: "" },
-    isEdit = false,
+export const UserUpdateForm = ({
+    initialData = { id: "", name: "", email: "", phone: "" },
     onSubmit,
 }) => {
     const formik = useFormik({
         initialValues: initialData,
         validationSchema: Yup.object({
+            id: Yup.number()
+                .required("Id is a required field"),
             name: Yup.string()
                 .matches(/^[A-Za-z ]*$/, "Please, enter a valid name")
                 .min(2, "Name is too short")
@@ -24,13 +25,15 @@ export const UserForm = ({
                 .nullable()
         }),
         onSubmit: async (values) => {
+            console.log(values)
             try {
                 if (onSubmit) {
                     await onSubmit(values);
                 } else {
-                    await createUser(values);
+                    const { id, ...rest } = values;
+                    await updateUser(Number(id), rest);
                 }
-                toast.success(isEdit ? "User updated successfully!" : "User created successfully!");
+                toast.success("User updated successfully!");
             } catch (error) {
                 console.error(error);
                 toast.error(error.response.data?.message || 'Something went wrong. Please try again');
@@ -41,6 +44,19 @@ export const UserForm = ({
 
     return (
         <form onSubmit={formik.handleSubmit}>
+            <div>
+                <input
+                    name="id"
+                    placeholder="ID"
+                    value={formik.values.id}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                />
+                {formik.touched.id && formik.errors.id && (
+                    <div style={{ color: "red" }}>{formik.errors.id}</div>
+                )}
+            </div>
+
             <div>
                 <input
                     name="name"
@@ -71,7 +87,7 @@ export const UserForm = ({
                 <input
                     name="phone"
                     placeholder="Phone Number"
-                    value={formik.values.phoneNumber}
+                    value={formik.values.phone}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                 />
@@ -80,7 +96,7 @@ export const UserForm = ({
                 )}
             </div>
 
-            <button type="submit" style={{ marginTop: '20px' }}>{isEdit ? "Update" : "Create"}</button>
+            <button type="submit" style={{ marginTop: '20px' }}>{"Update"}</button>
         </form>
     );
 };

@@ -1,12 +1,12 @@
 import React from "react";
-import { UserCreationForm } from "../../components/UserCreationForm";
+import { UserUpdateForm } from "../../components/UserUpdateForm";
 import "./styles.css";
 
-export default function CreateUser() {
+export default function UpdateUser() {
   return (
     <div className="create-user-container">
       <div className="create-user-form-wrapper">
-        <UserCreationForm />
+        <UserUpdateForm/>
       </div>
     </div>
   );
