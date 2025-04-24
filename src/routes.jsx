@@ -3,6 +3,7 @@ import { BrowserRouter, Routes as RouterRoutes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
+import List from "./pages/List";
 
 const routes = [
   {
@@ -10,6 +11,11 @@ const routes = [
     name: "Home",
     path: "/",
     visible: false,
+  },
+  {
+    component: <List />,
+    name: "List Users",
+    path: "/list",
   },
 ];
 
