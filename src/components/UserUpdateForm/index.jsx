@@ -25,7 +25,6 @@ export const UserUpdateForm = ({
                 .nullable()
         }),
         onSubmit: async (values) => {
-            console.log(values)
             try {
                 if (onSubmit) {
                     await onSubmit(values);
