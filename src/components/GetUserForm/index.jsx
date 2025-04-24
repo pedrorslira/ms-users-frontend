@@ -15,7 +15,7 @@ export const GetUserForm = () => {
     } catch (error) {
       console.error(error);
       setUser(null);
-      toast.error("User not found");
+      toast.error(error.response.data?.message || 'Failed to obtain user informations');
     }
   };
 
